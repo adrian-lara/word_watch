@@ -10341,7 +10341,18 @@ function renderTopWord(word) {
 }
 
 function renderParagraph() {
-  console.log("HI")
+  let text = document.getElementsByTagName('textarea')[0].value
+  let wordCounts = text.split(' ').reduce(function(allWords, word) {
+    allWords[word.toLowerCase()]++ || (allWords[word.toLowerCase()] = 1)
+    return allWords
+  }, {})
+
+  console.log(wordCounts)
+  Object.keys(wordCounts).forEach(function(word) {
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.word-count').append(`
+        <p style="font-size: ${wordCounts[word]}em">${word}</p>
+      `)
+  })
 }
 
 
@@ -10411,7 +10422,6 @@ function getTopWord() {
 
 function breakDown() {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()('button').on('click', function() {
-    // event.preventDefault()
     Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["a" /* renderParagraph */])()
   })
 }

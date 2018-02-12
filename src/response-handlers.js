@@ -7,7 +7,18 @@ function renderTopWord(word) {
 }
 
 function renderParagraph() {
-  console.log("HI")
+  let text = document.getElementsByTagName('textarea')[0].value
+  let wordCounts = text.split(' ').reduce(function(allWords, word) {
+    allWords[word.toLowerCase()]++ || (allWords[word.toLowerCase()] = 1)
+    return allWords
+  }, {})
+
+  console.log(wordCounts)
+  Object.keys(wordCounts).forEach(function(word) {
+    $('.word-count').append(`
+        <p style="font-size: ${wordCounts[word]}em">${word}</p>
+      `)
+  })
 }
 
 export {
