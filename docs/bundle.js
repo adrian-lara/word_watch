@@ -10344,7 +10344,6 @@ function getTopWord() {
 }
 
 function postWords(wordCounts) {
-  console.log(wordCounts)
   Object.keys(wordCounts).forEach(function(word) {
     for (let i = 0; i < wordCounts[word]['value']; i++) {
       let bodyContent = { word: { value: word }}
@@ -10355,7 +10354,6 @@ function postWords(wordCounts) {
       })
     }
   })
-
 }
 
 
@@ -10436,18 +10434,22 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).ready(() => {
 function breakDown() {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()('button').on('click', function() {
     let text = document.getElementsByTagName('textarea')[0].value.toLowerCase()
-    let wordCounts = text.split(' ').reduce(function(allWords, word) {
-      if (allWords[word]) {
-        allWords[word]['value']++
-      } else {
-        (allWords[word] = { value: 1 })
-      }
-      return allWords
-    }, {})
+    let wordCounts = countWords(text)
 
     Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["a" /* renderParagraph */])(wordCounts)
     Object(__WEBPACK_IMPORTED_MODULE_2__fetch_requests__["b" /* postWords */])(wordCounts)
   })
+}
+
+function countWords(text) {
+  return text.split(' ').reduce(function(allWords, word) {
+    if (allWords[word]) {
+      allWords[word]['value']++
+    } else {
+      (allWords[word] = { value: 1 })
+    }
+    return allWords
+  }, {})
 }
 
 function returnBreakDown() {
