@@ -1,5 +1,6 @@
 import $ from 'jquery'
+import getTopWord from './fetch-requests'
 
 $(document).ready(() => {
-  // have fun!
+  getTopWord()
 })
