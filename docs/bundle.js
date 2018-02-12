@@ -10345,7 +10345,7 @@ function getTopWord() {
 
 function postWords(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
-    for (let i = 0; i < wordCounts[word]['value']; i++) {
+    for (let i = 0; i < wordCounts[word]; i++) {
       let bodyContent = { word: { value: word }}
       fetch(`${url}/api/v1/words`,{
         method: "POST",
@@ -10379,7 +10379,7 @@ function renderTopWord(word) {
 function renderParagraph(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
     __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.word-count').append(`
-        <p style="font-size: ${wordCounts[word]['value']}em">${word}</p>
+        <p style="font-size: ${wordCounts[word]}em">${word}</p>
       `)
   })
 }
@@ -10435,7 +10435,7 @@ function breakDown() {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()('button').on('click', function() {
     let text = document.getElementsByTagName('textarea')[0].value.toLowerCase()
     let wordCounts = countWords(text)
-
+console.log(wordCounts)
     Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["a" /* renderParagraph */])(wordCounts)
     Object(__WEBPACK_IMPORTED_MODULE_2__fetch_requests__["b" /* postWords */])(wordCounts)
   })
@@ -10443,11 +10443,7 @@ function breakDown() {
 
 function countWords(text) {
   return text.split(' ').reduce(function(allWords, word) {
-    if (allWords[word]) {
-      allWords[word]['value']++
-    } else {
-      (allWords[word] = { value: 1 })
-    }
+    allWords[word]++ || (allWords[word] = 1)
     return allWords
   }, {})
 }

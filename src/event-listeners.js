@@ -6,7 +6,7 @@ function breakDown() {
   $('button').on('click', function() {
     let text = document.getElementsByTagName('textarea')[0].value.toLowerCase()
     let wordCounts = countWords(text)
-
+console.log(wordCounts)
     renderParagraph(wordCounts)
     postWords(wordCounts)
   })
@@ -14,11 +14,7 @@ function breakDown() {
 
 function countWords(text) {
   return text.split(' ').reduce(function(allWords, word) {
-    if (allWords[word]) {
-      allWords[word]['value']++
-    } else {
-      (allWords[word] = { value: 1 })
-    }
+    allWords[word]++ || (allWords[word] = 1)
     return allWords
   }, {})
 }

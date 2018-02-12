@@ -9,7 +9,7 @@ function renderTopWord(word) {
 function renderParagraph(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
     $('.word-count').append(`
-        <p style="font-size: ${wordCounts[word]['value']}em">${word}</p>
+        <p style="font-size: ${wordCounts[word]}em">${word}</p>
       `)
   })
 }

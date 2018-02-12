@@ -10,7 +10,7 @@ function getTopWord() {
 
 function postWords(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
-    for (let i = 0; i < wordCounts[word]['value']; i++) {
+    for (let i = 0; i < wordCounts[word]; i++) {
       let bodyContent = { word: { value: word }}
       fetch(`${url}/api/v1/words`,{
         method: "POST",
