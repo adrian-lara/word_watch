@@ -6,17 +6,10 @@ function renderTopWord(word) {
     `)
 }
 
-function renderParagraph() {
-  let text = document.getElementsByTagName('textarea')[0].value
-  let wordCounts = text.split(' ').reduce(function(allWords, word) {
-    allWords[word.toLowerCase()]++ || (allWords[word.toLowerCase()] = 1)
-    return allWords
-  }, {})
-
-  console.log(wordCounts)
+function renderParagraph(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
     $('.word-count').append(`
-        <p style="font-size: ${wordCounts[word]}em">${word}</p>
+        <p style="font-size: ${wordCounts[word]['value']}em">${word}</p>
       `)
   })
 }
