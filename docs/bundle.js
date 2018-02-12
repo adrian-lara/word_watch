@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10328,6 +10328,44 @@ return jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getTopWord; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postWords; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__response_handlers__ = __webpack_require__(2);
+
+
+const url = 'https://wordwatch-api.herokuapp.com'
+
+function getTopWord() {
+  fetch(`${url}/api/v1/top_word`)
+    .then(response => response.json(response))
+    .then(word => Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["b" /* renderTopWord */])(word))
+}
+
+function postWords(wordCounts) {
+  console.log(wordCounts)
+  Object.keys(wordCounts).forEach(function(word) {
+    for (let i = 0; i < wordCounts[word]['value']; i++) {
+      let bodyContent = { word: { value: word }}
+      fetch(`${url}/api/v1/words`,{
+        method: "POST",
+        body: JSON.stringify(bodyContent),
+        headers: { 'content-type': 'application/json' }
+      })
+    }
+  })
+
+}
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return renderTopWord; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return renderParagraph; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
@@ -10340,17 +10378,10 @@ function renderTopWord(word) {
     `)
 }
 
-function renderParagraph() {
-  let text = document.getElementsByTagName('textarea')[0].value
-  let wordCounts = text.split(' ').reduce(function(allWords, word) {
-    allWords[word.toLowerCase()]++ || (allWords[word.toLowerCase()] = 1)
-    return allWords
-  }, {})
-
-  console.log(wordCounts)
+function renderParagraph(wordCounts) {
   Object.keys(wordCounts).forEach(function(word) {
     __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.word-count').append(`
-        <p style="font-size: ${wordCounts[word]}em">${word}</p>
+        <p style="font-size: ${wordCounts[word]['value']}em">${word}</p>
       `)
   })
 }
@@ -10359,22 +10390,22 @@ function renderParagraph() {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(3);
+__webpack_require__(4);
 module.exports = __webpack_require__(6);
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fetch_requests__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fetch_requests__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_listeners__ = __webpack_require__(5);
 
 
@@ -10383,29 +10414,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).ready(() => {
   Object(__WEBPACK_IMPORTED_MODULE_1__fetch_requests__["a" /* getTopWord */])()
   Object(__WEBPACK_IMPORTED_MODULE_2__event_listeners__["a" /* breakDown */])()
+  Object(__WEBPACK_IMPORTED_MODULE_2__event_listeners__["b" /* returnBreakDown */])()
 })
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getTopWord; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__response_handlers__ = __webpack_require__(1);
-
-
-const url = 'https://wordwatch-api.herokuapp.com'
-
-function getTopWord() {
-  fetch(`${url}/api/v1/top_word`)
-    .then(response => response.json(response))
-    .then(word => Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["b" /* renderTopWord */])(word))
-}
-
-
 
 
 /***/ }),
@@ -10414,15 +10424,37 @@ function getTopWord() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return breakDown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return returnBreakDown; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__response_handlers__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__response_handlers__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fetch_requests__ = __webpack_require__(1);
+
 
 
 
 function breakDown() {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()('button').on('click', function() {
-    Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["a" /* renderParagraph */])()
+    let text = document.getElementsByTagName('textarea')[0].value.toLowerCase()
+    let wordCounts = text.split(' ').reduce(function(allWords, word) {
+      if (allWords[word]) {
+        allWords[word]['value']++
+      } else {
+        (allWords[word] = { value: 1 })
+      }
+      return allWords
+    }, {})
+
+    Object(__WEBPACK_IMPORTED_MODULE_1__response_handlers__["a" /* renderParagraph */])(wordCounts)
+    Object(__WEBPACK_IMPORTED_MODULE_2__fetch_requests__["b" /* postWords */])(wordCounts)
+  })
+}
+
+function returnBreakDown() {
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()('textarea').on("keypress", function(event) {
+    if (event.originalEvent.key == "Enter") {
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()('button').trigger('click')
+    }
   })
 }
 

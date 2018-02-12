@@ -19,4 +19,15 @@ function breakDown() {
   })
 }
 
-export { breakDown }
+function returnBreakDown() {
+  $('textarea').on("keypress", function(event) {
+    if (event.originalEvent.key == "Enter") {
+      $('button').trigger('click')
+    }
+  })
+}
+
+export {
+  breakDown,
+  returnBreakDown,
+}
