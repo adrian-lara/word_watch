@@ -9,7 +9,6 @@ function getTopWord() {
 }
 
 function postWords(wordCounts) {
-  console.log(wordCounts)
   Object.keys(wordCounts).forEach(function(word) {
     for (let i = 0; i < wordCounts[word]['value']; i++) {
       let bodyContent = { word: { value: word }}
@@ -20,7 +19,6 @@ function postWords(wordCounts) {
       })
     }
   })
-
 }
 
 export {
